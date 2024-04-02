@@ -19,7 +19,8 @@ public class SartenMovimiento : MonoBehaviour
     private bool isLifting = false; // Indica si la sartén está realizando un movimiento brusco hacia arriba
 
     public float panForce = 2f; // Fuerza hacia arriba que se aplicará a la carne
-    public Rigidbody meatRigidbody; // Referencia al Rigidbody de la carne
+    
+    public Rigidbody meatRigidbody; // Referencias a los Rigidbody de la carne
 
     // Inicialización
     void Start()
@@ -31,7 +32,7 @@ public class SartenMovimiento : MonoBehaviour
         originalPosition = transform.localPosition;
         
         if (meatRigidbody == null)
-            meatRigidbody = GameObject.FindGameObjectWithTag("Carne").GetComponent<Rigidbody>();
+            meatRigidbody = GameObject.FindGameObjectWithTag("Carne").GetComponent<Rigidbody>();        
     }
 
     // Update is called once per frame
@@ -90,7 +91,7 @@ public class SartenMovimiento : MonoBehaviour
     // Método para restablecer la posición original de la sartén
     void ResetPosition()
     {
-        isLifting = false;
+        isLifting = false;        
         transform.localPosition = originalPosition;
     }
 }
