@@ -12,6 +12,8 @@ TagManager:
   - CarneAtras
   - CarneIzquierda
   - CarneDerecha
+  - SpawnPoint
+  - Entorno
   layers:
   - Default
   - TransparentFX
