@@ -4,59 +4,60 @@ using UnityEngine;
 
 public class CarneCocinandose1 : MonoBehaviour
 {
-    public Color colorAlContacto = Color.red; // Color al contacto con otro objeto
-    private Color colorOriginal; // Color original del objeto
-    private Renderer rend; // Referencia al componente Renderer
-    private bool enContacto = false; // Estado de contacto
-    private bool cambioColorActivado = false; // Estado de cambio de color activado
-    public float tiempoAntesDeCambio = 1.0f; // Tiempo antes de cambiar de color
+    public Color colorAlContacto = Color.red;
+    private Color colorOriginal;
+    private Renderer rend;    
+    public bool cocinado = false;
+    public float tiempoDeCoccion = 3f; // Tiempo en segundos para la cocción
+    public AudioSource sonidoCocinando; // Referencia al componente AudioSource
+    public AudioSource CarneCocinada; // Referencia al componente AudioSource
+    private bool sonidoReproducido = false; // Variable para controlar la reproducción del sonido
 
     void Start()
     {
-        // Obtener el componente Renderer del objeto
         rend = GetComponent<Renderer>();
+        colorOriginal = rend.material.color;        
+    }    
 
-        // Guardar el color original del objeto
-        colorOriginal = rend.material.color;
+    public void CambiarColor()
+    {       
+        /// Si la carne no ha sido cocinada todavía
+        if (!cocinado)
+        {
+            /// Programar la restauración del color original después del tiempo de cocción
+            Invoke("RestaurarColor", tiempoDeCoccion);
+            
+            // Cambiar el color solo después de que haya pasado el tiempo de cocción
+            Invoke("CambiarColorInternamente", tiempoDeCoccion);
+
+            // Iniciar la reproducción del sonido
+            sonidoCocinando.Play();
+            sonidoReproducido = true;
+        }     
+    }    
+
+    public void RestaurarColor()
+    {
+        rend.material.color = colorOriginal;        
+        cocinado = false; // Reiniciar el estado de cocción
+
+        // Detener la reproducción del sonido
+        sonidoCocinando.Stop();
+
+        if(sonidoReproducido)
+        {
+            CarneCocinada.Play();
+            sonidoReproducido = false;
+        }
     }
 
-    void Update()
+    private void CambiarColorInternamente()
     {
-        // Verificar si el objeto está en contacto y el tiempo de espera ha pasado
-        if (enContacto && tiempoAntesDeCambio > 0)
+        // Cambiar el color solo si aún no ha sido cocinado
+        if (!cocinado)
         {
-            tiempoAntesDeCambio -= Time.deltaTime;
-        }
-        else if (enContacto && !cambioColorActivado)
-        {
-            // Cambiar el color del objeto al color de contacto
             rend.material.color = colorAlContacto;
-            cambioColorActivado = true;
-        }
-    }
-
-    // Método que se ejecuta cuando otro objeto entra en contacto con el objeto actual
-    void OnTriggerEnter(Collider other)
-    {
-        // Verificar si el objeto que entró en contacto tiene un BoxCollider
-        if (other.GetComponent<BoxCollider>() != null)
-        {
-            // Activar el estado de contacto
-            enContacto = true;
-        }
-    }
-
-    // Método que se ejecuta cuando otro objeto deja de estar en contacto con el objeto actual
-    void OnTriggerExit(Collider other)
-    {
-        // Verificar si el objeto que dejó de estar en contacto tiene un BoxCollider
-        if (other.GetComponent<BoxCollider>() != null)
-        {
-            // Desactivar el estado de contacto
-            enContacto = false;
-
-            // Reiniciar el tiempo antes del cambio
-            tiempoAntesDeCambio = 1.0f;
+            cocinado = true;
         }
     }
 }

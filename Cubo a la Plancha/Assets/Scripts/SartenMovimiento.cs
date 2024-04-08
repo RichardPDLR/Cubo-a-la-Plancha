@@ -20,7 +20,7 @@ public class SartenMovimiento : MonoBehaviour
 
     public float panForce = 2f; // Fuerza hacia arriba que se aplicará a la carne
     
-    public Rigidbody meatRigidbody; // Referencias a los Rigidbody de la carne
+    public Rigidbody meatRigidbody; // Referencias a los Rigidbody de la carne   
 
     // Inicialización
     void Start()
@@ -29,10 +29,11 @@ public class SartenMovimiento : MonoBehaviour
         currentRotation = transform.localEulerAngles;
 
         // Guarda la posición original de la sartén
-        originalPosition = transform.localPosition;
+        originalPosition = transform.localPosition;        
         
-        if (meatRigidbody == null)
-            meatRigidbody = GameObject.FindGameObjectWithTag("Carne").GetComponent<Rigidbody>();        
+        if (meatRigidbody == null)        
+             meatRigidbody = GameObject.FindGameObjectWithTag("Carne").GetComponent<Rigidbody>();
+            
     }
 
     // Update is called once per frame
@@ -60,7 +61,7 @@ public class SartenMovimiento : MonoBehaviour
             isLifting = true;            
             StartCoroutine(LiftUp()); // Llama a la función para iniciar el movimiento brusco hacia arriba
         }
-    }
+    }    
 
     // Método para iniciar el movimiento brusco hacia arriba de forma suave
     IEnumerator LiftUp()
@@ -76,22 +77,25 @@ public class SartenMovimiento : MonoBehaviour
             transform.localPosition = Vector3.Lerp(originalPosition, targetPosition, elapsedTime / duration);
             elapsedTime += Time.deltaTime;
             yield return null;
-        }
+        }        
         
         // Aplica una fuerza hacia arriba a la carne
-        meatRigidbody.AddForce(Vector3.up * panForce, ForceMode.Impulse);
+        if (meatRigidbody != null)
+        {
+            meatRigidbody.AddForce(Vector3.up * panForce, ForceMode.Impulse);
+        }        
 
         transform.localPosition = targetPosition; // Establece la posición final
         
         yield return new WaitForSeconds(0.2f); // Espera un breve período de tiempo antes de restablecer la posición original
         
-        ResetPosition(); // Llama a la función para restablecer la posición original
+        ResetPosition(); // Llama a la función para restablecer la posición original        
     }
 
     // Método para restablecer la posición original de la sartén
     void ResetPosition()
-    {
+    {        
         isLifting = false;        
         transform.localPosition = originalPosition;
-    }
+    }    
 }
