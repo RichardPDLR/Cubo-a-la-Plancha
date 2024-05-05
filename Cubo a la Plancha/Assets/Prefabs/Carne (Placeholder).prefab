@@ -243,6 +243,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   colorAlContacto: {r: 1, g: 0, b: 0, a: 1}
+  rend: {fileID: 0}
   cocinado: 0
   tiempoDeCoccion: 15
   sonidoCocinando: {fileID: 7214211169692546654}
@@ -286,6 +287,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   colorAlContacto: {r: 1, g: 0, b: 0, a: 1}
+  rend: {fileID: 0}
   cocinado: 0
   tiempoDeCoccion: 15
   sonidoCocinando: {fileID: 7214211169692546654}
@@ -329,6 +331,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   colorAlContacto: {r: 1, g: 0, b: 0, a: 1}
+  rend: {fileID: 0}
   cocinado: 0
   tiempoDeCoccion: 15
   sonidoCocinando: {fileID: 7214211169692546654}
@@ -564,6 +567,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   colorAlContacto: {r: 1, g: 0, b: 0, a: 1}
+  rend: {fileID: 0}
   cocinado: 0
   tiempoDeCoccion: 15
   sonidoCocinando: {fileID: 7214211169692546654}
@@ -672,6 +676,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   colorAlContacto: {r: 1, g: 0, b: 0, a: 1}
+  rend: {fileID: 0}
   cocinado: 0
   tiempoDeCoccion: 15
   sonidoCocinando: {fileID: 7214211169692546654}
@@ -715,6 +720,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   colorAlContacto: {r: 1, g: 0, b: 0, a: 1}
+  rend: {fileID: 0}
   cocinado: 0
   tiempoDeCoccion: 15
   sonidoCocinando: {fileID: 7214211169692546654}

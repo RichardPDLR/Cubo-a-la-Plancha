@@ -20,11 +20,13 @@ public class SartenMovimiento : MonoBehaviour
 
     public float panForce = 2f; // Fuerza hacia arriba que se aplicará a la carne
     
-    public Rigidbody meatRigidbody; // Referencias a los Rigidbody de la carne   
+    public Rigidbody meatRigidbody; // Referencias a los Rigidbody de la carne
 
     // Inicialización
     void Start()
-    {
+    {        
+        Cursor.lockState = CursorLockMode.Locked;
+
         // Guarda la rotación inicial de la sartén
         currentRotation = transform.localEulerAngles;
 

@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using System.Linq;
 
 public class CarneCocinandose1 : MonoBehaviour
 {
     public Color colorAlContacto = Color.red;
     private Color colorOriginal;
-    private Renderer rend;    
+    public Renderer rend;
     public bool cocinado = false;
     public float tiempoDeCoccion = 3f; // Tiempo en segundos para la cocción
     public AudioSource sonidoCocinando; // Referencia al componente AudioSource
@@ -33,7 +35,7 @@ public class CarneCocinandose1 : MonoBehaviour
             // Iniciar la reproducción del sonido
             sonidoCocinando.Play();
             sonidoReproducido = true;
-        }     
+        }
     }    
 
     public void RestaurarColor()
@@ -57,7 +59,7 @@ public class CarneCocinandose1 : MonoBehaviour
         if (!cocinado)
         {
             rend.material.color = colorAlContacto;
-            cocinado = true;
+            cocinado = true;  
         }
-    }
+    }    
 }
