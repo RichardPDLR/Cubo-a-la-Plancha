@@ -9,4 +9,10 @@ public class CanvasInicio : MonoBehaviour
     {
         SceneManager.LoadScene(nombre);
     }
+
+    public void salir()
+    {
+        UnityEditor.EditorApplication.isPlaying = false;
+        Application.Quit();
+    }
 }

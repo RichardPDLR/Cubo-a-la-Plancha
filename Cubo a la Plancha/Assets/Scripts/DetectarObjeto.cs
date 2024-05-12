@@ -3,18 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System;
-using System.Timers;
 
 public class DetectarObjeto : MonoBehaviour
 {
+    public MusicManager musicManager;
     public Transform sarten;
     public LayerMask capaSarten;
+    public GameObject GanarMenu;    
+    public AudioClip Silbato;
+    private AudioSource audioSource;       
+    private bool hasPlayedOnce = false;
 
     void OnTriggerEnter(Collider other)
     {
         // Verificar si el objeto que entró en contacto tiene un componente CarneCocinandose1
         CarneCocinandose1 colorChanger = other.GetComponent<CarneCocinandose1>();               
         Cronometro cronometro = other.GetComponent<Cronometro>();
+        MusicManager musicManager = other.GetComponent<MusicManager>();
 
         if (colorChanger != null)
         {
@@ -29,16 +34,16 @@ public class DetectarObjeto : MonoBehaviour
                 Vector3 direccionHaciaPuntoDeContacto = (puntoDeContacto - transform.position).normalized;
                 float angulo = Vector3.Angle(direccionAbajo, direccionHaciaPuntoDeContacto);
 
-                // Si el ángulo es menor que un cierto umbral, cambiar el color de la cara del cubo
+                // Si el ángulo es menor que un cierto umbral, cambiar el material de la cara del cubo
                 if (angulo < 60.0f)
                 {
                     
-                    colorChanger.CambiarColor();
-                    Debug.Log("El punto de contacto está cerca de la sartén. Cambiando color." + other.gameObject.name);
+                    colorChanger.CambiarMaterial();                    
+                    Debug.Log("El punto de contacto está cerca de la sartén. Cambiando material." + other.gameObject.name);
 
 
 
-                    // Codigo que Carga la Escena "Juego Terminado" Cuando todos los lados del Cubo cambien de color
+                    // Codigo que Carga la Escena "Juego Terminado" Cuando todos los lados del Cubo cambien de material
                     // Encuentra todos los GameObjects con los tags deseados
                     GameObject[] Lados1 = GameObject.FindGameObjectsWithTag("CarneFrente");
                     GameObject[] Lados2 = GameObject.FindGameObjectsWithTag("CarneAtras");
@@ -56,33 +61,34 @@ public class DetectarObjeto : MonoBehaviour
                     Lados5.CopyTo(TodosLosLados, Lados1.Length + Lados2.Length + Lados3.Length + Lados4.Length);
                     Lados6.CopyTo(TodosLosLados, Lados1.Length + Lados2.Length + Lados3.Length + Lados4.Length + Lados5.Length);
 
-                    // Verifica si todos los lados tienen el color deseado
-                    bool todosTienenColorDeseado = true;
+                    // Verifica si todos los lados tienen el material deseado 
+                    bool todosTienenMaterialDeseado = true;                   
                     foreach (GameObject lado in TodosLosLados)
                     {
                         Renderer renderer = lado.GetComponent<Renderer>();
                         if (renderer != null)
                         {
-                            if (renderer.material.color != colorChanger.colorAlContacto)
+                            if (renderer.sharedMaterial != colorChanger.materialAlContacto)
                             {
-                                todosTienenColorDeseado = false;
-                                break; // Si un lado no tiene el color deseado, sal del bucle
+                                todosTienenMaterialDeseado = false;
+                                break; // Si un lado no tiene el material deseado, sal del bucle
                             }
                         }
                     }
 
-                    // Si todos los lados tienen el color deseado, carga la escena "Juego Terminado"
-                    if (todosTienenColorDeseado)
-                    {                                               
-                        Time.timeScale = 0f;
+                    // Si todos los lados tienen el material deseado, carga la escena "Juego Terminado"
+                    if (todosTienenMaterialDeseado)
+                    {
+                       // SceneManager.LoadScene("Juego Terminado");                        
+                        Time.timeScale = 0f;                        
+                        GanarMenu.SetActive(true);
                         Cursor.visible = true;
                         Cursor.lockState = CursorLockMode.None;
-                        SceneManager.LoadScene("Juego Terminado");
                     }      
                 }
-               /* else
+              /*  else
                 {
-                    Debug.Log("El punto de contacto no está suficientemente cerca de la sartén. No se cambió el color." + other.gameObject.name);
+                    
                 } */
             }
            /* else
@@ -90,5 +96,38 @@ public class DetectarObjeto : MonoBehaviour
                 Debug.Log("El objeto no está en la capa de la sartén. No se cambió el color." + other.gameObject.name);
             } */
         }
-    }  
+    }
+
+    private void Start()
+    {
+        musicManager = FindObjectOfType<MusicManager>();
+        audioSource = GetComponent<AudioSource>();
+        audioSource.clip = Silbato;
+    }
+
+    private void Update()
+    {                
+        PartidaTerminada();
+    }
+
+    private void PartidaTerminada()
+    {
+        if (Time.timeScale == 0f)
+        {            
+            if (!hasPlayedOnce)
+            {                
+                musicManager.MusicaDeFondo.Stop();
+                audioSource.Play();
+                hasPlayedOnce = true;
+            }
+        }
+        else
+        {            
+            if (audioSource.isPlaying)
+            {
+                audioSource.Stop();
+                hasPlayedOnce = false;
+            }
+        }        
+    }
 }

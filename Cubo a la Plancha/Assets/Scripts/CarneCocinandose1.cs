@@ -5,61 +5,64 @@ using UnityEngine.SceneManagement;
 using System.Linq;
 
 public class CarneCocinandose1 : MonoBehaviour
-{
-    public Color colorAlContacto = Color.red;
-    private Color colorOriginal;
-    public Renderer rend;
+{    
+    public Material materialAlContacto;
+    private Material materialOriginal;
+    private Renderer rend;
     public bool cocinado = false;
     public float tiempoDeCoccion = 3f; // Tiempo en segundos para la cocción
-    public AudioSource sonidoCocinando; // Referencia al componente AudioSource
+    public AudioSource sonidoCocinando; // Referencia al componente AudioSource    
     public AudioSource CarneCocinada; // Referencia al componente AudioSource
-    private bool sonidoReproducido = false; // Variable para controlar la reproducción del sonido
+    public bool sonidoReproducido = false; // Variable para controlar la reproducción del sonido
+    public GameObject EfectoDeHumo;
 
     void Start()
     {
         rend = GetComponent<Renderer>();
-        colorOriginal = rend.material.color;        
+        materialOriginal = rend.material;        
     }    
 
-    public void CambiarColor()
+    public void CambiarMaterial()
     {       
         /// Si la carne no ha sido cocinada todavía
         if (!cocinado)
         {
-            /// Programar la restauración del color original después del tiempo de cocción
-            Invoke("RestaurarColor", tiempoDeCoccion);
+            /// Programar la restauración del material original después del tiempo de cocción
+            Invoke("RestaurarMaterial", tiempoDeCoccion);
             
-            // Cambiar el color solo después de que haya pasado el tiempo de cocción
-            Invoke("CambiarColorInternamente", tiempoDeCoccion);
+            // Cambiar el material solo después de que haya pasado el tiempo de cocción
+            Invoke("CambiarMaterialInternamente", tiempoDeCoccion);
 
             // Iniciar la reproducción del sonido
+            EfectoDeHumo.SetActive(true);
             sonidoCocinando.Play();
             sonidoReproducido = true;
         }
     }    
 
-    public void RestaurarColor()
+    public void RestaurarMaterial()
     {
-        rend.material.color = colorOriginal;        
-        cocinado = false; // Reiniciar el estado de cocción
+        rend.material = materialOriginal;        
+        cocinado = false; // Reiniciar el estado de cocción        
 
-        // Detener la reproducción del sonido
+        // Detener la reproducción del sonido        
         sonidoCocinando.Stop();
 
         if(sonidoReproducido)
         {
-            CarneCocinada.Play();
+            EfectoDeHumo.SetActive(false);
+            CarneCocinada.Play();            
             sonidoReproducido = false;
         }
     }
 
-    private void CambiarColorInternamente()
+    private void CambiarMaterialInternamente()
     {
-        // Cambiar el color solo si aún no ha sido cocinado
+        // Cambiar el material solo si aún no ha sido cocinado
         if (!cocinado)
         {
-            rend.material.color = colorAlContacto;
-            cocinado = true;  
+            rend.material = materialAlContacto;
+            cocinado = true;            
         }
     }    
 }

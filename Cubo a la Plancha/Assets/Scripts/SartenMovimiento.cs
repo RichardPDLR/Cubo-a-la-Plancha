@@ -41,28 +41,31 @@ public class SartenMovimiento : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Obtiene el movimiento del mouse en los ejes horizontal (izquierda-derecha) y vertical (arriba-abajo)
-        float mouseX = Input.GetAxis("Mouse X");
-        float mouseY = Input.GetAxis("Mouse Y");
-        
-        float rotationZ = mouseX * sensitivity; // Calcula la rotación en el eje Z basada en el movimiento horizontal del mouse
-        
-        float rotationX = -mouseY * sensitivity; // Calcula la rotación en el eje X basada en el movimiento vertical del mouse
-        
-        currentRotation += new Vector3(rotationX, 0f, rotationZ); // Actualiza la rotación actual de la sartén
-
-        // Limita la rotación en los ejes Z y X dentro de los rangos especificados
-        currentRotation.x = Mathf.Clamp(currentRotation.x, minRotationX, maxRotationX);
-        currentRotation.z = Mathf.Clamp(currentRotation.z, minRotationZ, maxRotationZ);
-        
-        transform.localEulerAngles = currentRotation; // Aplica la rotación a la sartén
-
-         // Maneja el movimiento brusco hacia arriba al hacer clic izquierdo del mouse
-        if (Input.GetMouseButtonDown(0) && !isLifting)
+        if(Time.timeScale == 1f)
         {
-            isLifting = true;            
-            StartCoroutine(LiftUp()); // Llama a la función para iniciar el movimiento brusco hacia arriba
-        }
+            // Obtiene el movimiento del mouse en los ejes horizontal (izquierda-derecha) y vertical (arriba-abajo)
+            float mouseX = Input.GetAxis("Mouse X");
+            float mouseY = Input.GetAxis("Mouse Y");
+            
+            float rotationZ = mouseX * sensitivity; // Calcula la rotación en el eje Z basada en el movimiento horizontal del mouse
+            
+            float rotationX = -mouseY * sensitivity; // Calcula la rotación en el eje X basada en el movimiento vertical del mouse
+            
+            currentRotation += new Vector3(rotationX, 0f, rotationZ); // Actualiza la rotación actual de la sartén
+
+            // Limita la rotación en los ejes Z y X dentro de los rangos especificados
+            currentRotation.x = Mathf.Clamp(currentRotation.x, minRotationX, maxRotationX);
+            currentRotation.z = Mathf.Clamp(currentRotation.z, minRotationZ, maxRotationZ);
+            
+            transform.localEulerAngles = currentRotation; // Aplica la rotación a la sartén
+
+            // Maneja el movimiento brusco hacia arriba al hacer clic izquierdo del mouse
+            if (Input.GetMouseButtonDown(0) && !isLifting)
+            {
+                isLifting = true;            
+                StartCoroutine(LiftUp()); // Llama a la función para iniciar el movimiento brusco hacia arriba
+            }
+        }        
     }    
 
     // Método para iniciar el movimiento brusco hacia arriba de forma suave
