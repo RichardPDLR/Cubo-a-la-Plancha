@@ -9,6 +9,8 @@ public class Cronometro : MonoBehaviour
     [SerializeField] TextMeshProUGUI textoCrono;
     [SerializeField] private float tiempo;
 
+    public GameObject Sarten;
+
     private int tiempoMinutos, tiempoSegundos, tiempoDecimasDeSegundo;
 
     // Agrega una variable para controlar si el cronómetro debe seguir actualizándose
@@ -16,7 +18,7 @@ public class Cronometro : MonoBehaviour
 
     void Crono()
     {
-        if (cronometroActivo)
+        if (cronometroActivo && Sarten.activeSelf == true)
         {
             tiempo += Time.deltaTime;
 

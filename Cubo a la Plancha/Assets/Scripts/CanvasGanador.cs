@@ -13,8 +13,8 @@ public class CanvasGanador : MonoBehaviour
         if (musicManager != null)
         {
             Time.timeScale = 1f;
-            musicManager.MusicaDeFondo.Stop();
-            musicManager.MusicaGanar();
+            musicManager.MusicaDeMenu.Stop();
+            StartCoroutine(musicManager.PlayAudiosInSequence());
         }
      }
 

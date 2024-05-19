@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu de Inicio.unity
     guid: 7de0b913b1b006f4bbbe222963b94490
   - enabled: 1
+    path: Assets/Scenes/Cinematica de Introduccion.unity
+    guid: 16cc936a204c6d644aa2c59edc0aa7e6
+  - enabled: 1
     path: Assets/Scenes/Minijuego.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1

@@ -22,16 +22,18 @@ public class SartenMovimiento : MonoBehaviour
     
     public Rigidbody meatRigidbody; // Referencias a los Rigidbody de la carne
 
+    
+
     // Inicialización
     void Start()
-    {        
+    {
         Cursor.lockState = CursorLockMode.Locked;
 
         // Guarda la rotación inicial de la sartén
         currentRotation = transform.localEulerAngles;
 
         // Guarda la posición original de la sartén
-        originalPosition = transform.localPosition;        
+        originalPosition = transform.localPosition;
         
         if (meatRigidbody == null)        
              meatRigidbody = GameObject.FindGameObjectWithTag("Carne").GetComponent<Rigidbody>();
@@ -102,5 +104,5 @@ public class SartenMovimiento : MonoBehaviour
     {        
         isLifting = false;        
         transform.localPosition = originalPosition;
-    }    
+    }
 }
