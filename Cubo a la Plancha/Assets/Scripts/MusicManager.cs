@@ -11,6 +11,8 @@ public class MusicManager : MonoBehaviour
     public AudioSource MusicaDeEsperaEmpezar;
     public AudioSource MusicaDeEsperaLoop;
 
+    public GameObject Botones;    
+
     internal void MusicaMenu()
     {
         MusicaDeMenu.Play();
@@ -46,15 +48,16 @@ public class MusicManager : MonoBehaviour
         {
             yield return null; // Espera un frame
         }
-
+        
         // Reproduce el segundo audio
         MusicaDeEsperaEmpezar.Play();
+        Botones.SetActive(true);       
 
         while (MusicaDeEsperaEmpezar.isPlaying)
         {
-            yield return null; // Espera un frame
+            yield return null; // Espera un frame            
         }
 
         MusicaDeEsperaLoop.Play();
-    }
+    }    
 }

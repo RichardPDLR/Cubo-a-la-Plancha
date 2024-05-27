@@ -9,17 +9,18 @@ public class DetectarObjeto : MonoBehaviour
     public MusicManager musicManager;
     public Transform sarten;
     public LayerMask capaSarten;
-    public GameObject GanarMenu;    
+    public GameObject GanarMenu;
     public AudioClip Silbato;
     private AudioSource audioSource;       
     private bool hasPlayedOnce = false;
 
+    // public Vector3 boxSize = new Vector3(1, 0.1f, 1); // Ajusta este tamaño según tus necesidades
+    // public Vector3 boxCenterOffset = new Vector3(0, -0.5f, 0); // Ajusta la posición del centro de la caja
+
     void OnTriggerEnter(Collider other)
     {
         // Verificar si el objeto que entró en contacto tiene un componente CarneCocinandose1
-        CarneCocinandose1 colorChanger = other.GetComponent<CarneCocinandose1>();               
-        Cronometro cronometro = other.GetComponent<Cronometro>();
-        MusicManager musicManager = other.GetComponent<MusicManager>();
+        CarneCocinandose1 colorChanger = other.GetComponent<CarneCocinandose1>();
 
         if (colorChanger != null)
         {
@@ -38,7 +39,7 @@ public class DetectarObjeto : MonoBehaviour
                 if (angulo < 60.0f)
                 {
                     
-                    colorChanger.CambiarMaterial();                    
+                    colorChanger.CambiarMaterial();
                     Debug.Log("El punto de contacto está cerca de la sartén. Cambiando material." + other.gameObject.name);
 
 
@@ -91,9 +92,9 @@ public class DetectarObjeto : MonoBehaviour
                     
                 } */
             }
-           /* else
+          /*  else
             {
-                Debug.Log("El objeto no está en la capa de la sartén. No se cambió el color." + other.gameObject.name);
+               // Debug.Log("El objeto no está en la capa de la sartén. No se cambió el color." + other.gameObject.name);
             } */
         }
     }
@@ -106,7 +107,8 @@ public class DetectarObjeto : MonoBehaviour
     }
 
     private void Update()
-    {                
+    {
+        // VerificarContactoConSarten();
         PartidaTerminada();
     }
 
@@ -130,4 +132,49 @@ public class DetectarObjeto : MonoBehaviour
             }
         }        
     }
+
+    // private void VerificarContactoConSarten()
+    // {
+    //     Vector3 centerPosition = new Vector3(sarten.position.x, sarten.position.y + boxCenterOffset.y, sarten.position.z);
+    //     Collider[] hits = Physics.OverlapBox(centerPosition, boxSize / 2, sarten.rotation, capaSarten);
+
+    //     foreach (Collider hit in hits)
+    //     {
+    //         CarneCocinandose1 colorChanger = hit.GetComponent<CarneCocinandose1>();
+    //         if (colorChanger != null)
+    //         {
+    //             // Ejecutar el código que se debe hacer cuando hay contacto con la sartén
+    //             Vector3 puntoDeContacto = hit.ClosestPoint(sarten.position);
+    //             Vector3 direccionAbajo = -transform.forward; // Vector que apunta hacia abajo
+    //             Vector3 direccionHaciaPuntoDeContacto = (puntoDeContacto - transform.position).normalized;
+    //             float angulo = Vector3.Angle(direccionAbajo, direccionHaciaPuntoDeContacto);
+
+    //             if (angulo < 60.0f)
+    //             {
+    //                 colorChanger.CambiarMaterial();
+    //                 Debug.Log("El punto de contacto está cerca de la sartén. Cambiando material." + hit.gameObject.name);
+
+    //                 // Aquí puedes agregar el código para verificar si todos los lados están cocinados
+    //             }
+    //         }
+    //     }
+    // }
+
+    // private void OnDrawGizmosSelected()
+    // {
+    //     Gizmos.color = Color.red; // Color del gizmo para el boxSize
+
+    //     // Dibujar el boxSize y boxCenterOffset juntos
+    //     Vector3 centerPosition = new Vector3(sarten.position.x, sarten.position.y + boxCenterOffset.y, sarten.position.z);
+    //     Gizmos.DrawWireCube(centerPosition, boxSize); // Dibuja el boxSize centrado en la posición calculada
+
+    //     // Dibujar líneas desde los bordes del boxSize hasta el boxCenterOffset
+    //     Vector3 halfSize = boxSize * 0.5f; // Calcula la mitad del tamaño del boxSize
+    //     Vector3 minPoint = centerPosition - halfSize; // Calcula el punto mínimo del boxSize
+    //     Vector3 maxPoint = centerPosition + halfSize; // Calcula el punto máximo del boxSize
+
+    //     Gizmos.color = Color.blue; // Cambia el color para el boxCenterOffset
+    //     Gizmos.DrawLine(new Vector3(minPoint.x, sarten.position.y, minPoint.z), new Vector3(centerPosition.x, sarten.position.y, centerPosition.z)); // Dibuja una línea desde el borde mínimo del boxSize hasta el boxCenterOffset en Y
+    //     Gizmos.DrawLine(new Vector3(maxPoint.x, sarten.position.y, maxPoint.z), new Vector3(centerPosition.x, sarten.position.y, centerPosition.z)); // Dibuja una línea desde el borde máximo del boxSize hasta el boxCenterOffset en Y
+    // }
 }

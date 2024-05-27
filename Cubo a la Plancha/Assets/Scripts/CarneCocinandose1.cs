@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Linq;
+using System;
 
 public class CarneCocinandose1 : MonoBehaviour
 {    
@@ -20,33 +21,45 @@ public class CarneCocinandose1 : MonoBehaviour
     {
         rend = GetComponent<Renderer>();
         materialOriginal = rend.material;        
-    }    
+    }
 
-    public void CambiarMaterial()
+    internal void CambiarMaterial()
     {       
         /// Si la carne no ha sido cocinada todavía
         if (!cocinado)
         {
+            
             /// Programar la restauración del material original después del tiempo de cocción
             Invoke("RestaurarMaterial", tiempoDeCoccion);
             
             // Cambiar el material solo después de que haya pasado el tiempo de cocción
-            Invoke("CambiarMaterialInternamente", tiempoDeCoccion);
+            Invoke("CambiarMaterialInternamente", tiempoDeCoccion);            
 
             // Iniciar la reproducción del sonido
             EfectoDeHumo.SetActive(true);
             sonidoCocinando.Play();
-            sonidoReproducido = true;
+            sonidoReproducido = true; 
         }
-    }    
+    }
 
-    public void RestaurarMaterial()
+    // internal void AumentarTiempoDeCoccion(float tiempoExtra)
+    // {
+    //     tiempoDeCoccion += tiempoExtra;
+    // }
+
+    // internal void ReiniciarTiempoDeCoccion()
+    // {
+    //     CancelInvoke("RestaurarMaterial");
+    //     CancelInvoke("CambiarMaterialInternamente");
+    // }
+
+    internal void RestaurarMaterial()
     {
         rend.material = materialOriginal;        
         cocinado = false; // Reiniciar el estado de cocción        
 
         // Detener la reproducción del sonido        
-        sonidoCocinando.Stop();
+        sonidoCocinando.Stop();        
 
         if(sonidoReproducido)
         {
@@ -64,5 +77,5 @@ public class CarneCocinandose1 : MonoBehaviour
             rend.material = materialAlContacto;
             cocinado = true;            
         }
-    }    
+    }
 }

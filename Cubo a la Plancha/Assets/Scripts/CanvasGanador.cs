@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class CanvasGanador : MonoBehaviour
 {
-    MusicManager musicManager;
+    MusicManager musicManager;    
 
      private void Start()
      {
@@ -13,7 +13,7 @@ public class CanvasGanador : MonoBehaviour
         if (musicManager != null)
         {
             Time.timeScale = 1f;
-            musicManager.MusicaDeMenu.Stop();
+            musicManager.MusicaDeMenu.Stop();            
             StartCoroutine(musicManager.PlayAudiosInSequence());
         }
      }
@@ -26,5 +26,5 @@ public class CanvasGanador : MonoBehaviour
     public void MenuInicial(string nombre)
     {
         SceneManager.LoadScene(nombre);
-    }    
+    } 
 }

@@ -77,7 +77,7 @@ public class SartenMovimiento : MonoBehaviour
         Vector3 targetPosition = originalPosition + Vector3.up * 0.3f;
 
         // Interpola suavemente la posición actual hacia la nueva posición durante un período de tiempo
-        float duration = 0.07f;
+        float duration = 0.1f;
         float elapsedTime = 0f;
         while (elapsedTime < duration)
         {
